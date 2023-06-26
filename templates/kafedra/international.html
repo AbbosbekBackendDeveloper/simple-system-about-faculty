@@ -1,0 +1,176 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Proffesor Ustozlar</h2>
+              <!-- <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'home' %}">Bosh Sahifa</a></li>
+            {% for category in categories %}
+            <li><a href="{% url 'international' %}?category={{category.name}}">{{ category.name }}</a></li>
+            {% endfor %}
+<!--            <li>AT-Servis Professor O'qituvchilari</li>-->
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4 posts-list">
+          {% for n in teacher %}
+          <div class="col-xl-4 col-md-6">
+            <article>
+
+              <div class="post-img">
+                {% if n.image %}
+                <img src="{{ n.image.url }}" alt="" class="img-fluid">
+                {% endif %}
+              </div>
+
+              <p class="post-category">{{ n.category }}</p>
+
+              <h2 class="title">
+                <a href="{{ n.get_absolute_url }}">{{ n.name }}</a>
+              </h2>
+
+              <div class="d-flex align-items-center">
+                <div class="post-meta">
+                  <p class="post-date">
+                    <time datetime="2022-01-01">{{ n.published_time | date }}</time>
+                  </p>
+                </div>
+              </div>
+
+            </article>
+          </div><!-- End post list item -->
+          {% endfor %}
+        </div><!-- End blog posts list -->
+
+<!--        <div class="blog-pagination">-->
+<!--          <ul class="justify-content-center">-->
+<!--            <li>-->
+<!--              {% if teachers.has_previous %}-->
+<!--              <a href="?page={{ teachers.previous_page_number  }}">Oldingsi</a>-->
+<!--              {% endif %}-->
+<!--            </li>-->
+<!--            {% for i in teachers.paginator.page_range %}<br>-->
+<!--            {% if teachers.number == i %}-->
+<!--            <li class="active">-->
+<!--              <a href="?page={{ i }}">{{ i }}</a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li>-->
+<!--              <a href="?page={{ i }}">{{ i }}</a>-->
+<!--            </li>-->
+<!--            {% endif %}<br>-->
+<!--            {% endfor %}-->
+<!--            <li>-->
+<!--              {% if teachers.has_next %}-->
+<!--              <a href="?page={{ teachers.next_page_number }}">Keyingisi</a>-->
+<!--              {% endif %}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>&lt;!&ndash; End blog pagination &ndash;&gt;-->
+
+<!--        <table class="table align-middle mb-0 bg-white">-->
+<!--          <thead class="bg-light">-->
+<!--            <tr>-->
+<!--              <th>FISH</th>-->
+<!--              <th>University</th>-->
+<!--              <th>Daraja</th>-->
+<!--              <th>Mutaxasisligi</th>-->
+<!--              <th>Kafedra</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--            <tr>-->
+<!--              {% for n in teacher %}-->
+<!--              <td>-->
+<!--                <div class="d-flex align-items-center">-->
+<!--                  {% if n.teacher_images %}-->
+<!--                  <img-->
+<!--                      src="{{ n.teacher_images.url }}"-->
+<!--                      alt=""-->
+<!--                      style="width: 45px; height: 45px"-->
+<!--                      class="rounded-circle"-->
+<!--                      />-->
+<!--                  {% endif %}-->
+<!--                  <div class="ms-3">-->
+<!--                    <p class="fw-bold mb-1"><a href="{{ n.get_absolute_url }}">{{ n.fish }}</a></p>-->
+<!--&lt;!&ndash;                    <p class="text-muted mb-0">john.doe@gmail.com</p>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <p class="text-muted mb-0">{{ n.graduated_education }}</p>-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <p class="fw-normal mb-1">{{ n.degree }}</p>-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <p class="fw-normal mb-1">{{ n.direction }}</p>-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <p class="fw-normal mb-1">{{ n.category }}</p>-->
+<!--              </td>-->
+<!--          </tr>-->
+<!--          {% endfor %}-->
+<!--          </tbody>-->
+<!--        </table>-->
+
+        <div class="blog-pagination">
+          {% if teachers.has_other_pages %}
+          <ul class="justify-content-center">
+              {% if teachers.has_previous %}
+            <li>
+              <a href="?page={{ teachers.previous_page_number  }}">Oldingsi</a>
+            </li>
+              {% else %}
+<!--            <li class="disabled"><span>&laquo;</span>-->
+            </li>
+              {% endif %}
+            {% for i in teachers.paginator.page_range %}<br>
+              {% if teachers.number == i %}
+            <li class="active">
+              <a href="?page={{ i }}">{{ i }}</a>
+            </li>
+              {% else %}
+            <li>
+              <a href="?page={{ i }}">{{ i }}</a>
+            </li>
+              {% endif %}<br>
+            {% endfor %}
+              {% if teachers.has_next %}
+            <li>
+              <a href="?page={{ teachers.next_page_number }}">Keyingisi</a>
+            </li>
+              {% else %}
+<!--            <li class="disabled"><span>&raquo;</span>-->
+            </li>
+              {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+    </section><!-- End Blog Section -->
+
+</main><!-- End #main -->
+
+{% endblock content %}
